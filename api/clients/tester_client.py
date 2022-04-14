@@ -1,5 +1,8 @@
-import websocket
 import json
+
+import websocket
+
+from api.models.base_model import BaseModel
 
 
 class TesterClient:
@@ -19,16 +22,14 @@ class TesterClient:
     def post_to_ws(cls, body):
         ws = websocket.WebSocket()
         ws.connect(cls.address)
+        print()
         if not isinstance(body, str):
-            body = json.loads(json.dumps(json.dumps(body, default=lambda x: x.__dict__)))
+            if isinstance(body, BaseModel):
+                body = json.dumps(body.dict())
+            else:
+                body = json.loads(json.dumps(json.dumps(body, default=lambda x: x.__dict__)))
         ws.send(body)
         response = ws.recv()
         ws.close()
         return response
 
-        # with websockets.connect(cls.address) as ws:
-        #     if not isinstance(body, str):
-        #         body = json.loads(json.dumps(json.dumps(body, default=lambda x: x.__dict__)))
-        #     await ws.send(body)
-        #     response = await ws.recv()
-        # return response

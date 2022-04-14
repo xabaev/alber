@@ -1,13 +1,17 @@
-from typing import List
+from typing import Optional
 
 from api.models.base_model import BaseModel
-from api.models.select.select_user import SelectUser
+
+
+class SelectUser(BaseModel):
+    name: str
+    surname: str
+    phone: str
+    age: int
 
 
 class SelectUserResponse(BaseModel):
-    attribute_type_map = {
-        'id': str,
-        'method': str,
-        'status': str,
-        'users': list[SelectUser]
-    }
+    id: str
+    method: str
+    status: str
+    users: Optional[list[SelectUser]] = None
