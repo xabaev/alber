@@ -21,4 +21,3 @@ class TesterClient:
         response = ws.recv()
         ws.close()
         return response
-
