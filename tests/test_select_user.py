@@ -1,18 +1,17 @@
-import unittest
 import uuid
 from random import randrange
 
 import pytest
 
 from api.clients.tester_client import TesterClient
+from api.commons.sorting import ordering
 from api.models.add_user import AddUser
 from api.models.select.select_user_request import SelectUserRequest
 from api.models.select.select_user_response import SelectUserResponse, SelectUser
 from api.models.tester_response import TesterResponse
-from tests.base_test import BaseTest, ordering
 
 
-class TestSelectUser(BaseTest, unittest.TestCase):
+class TestSelectUser:
     @pytest.mark.xfail(reason="Always comes back failure")
     def test_select_existing_user_by_phone(self):
         add_user = AddUser(id=str(uuid.uuid4()), method="add", name="name", surname="surname",

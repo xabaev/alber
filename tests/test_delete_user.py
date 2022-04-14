@@ -9,18 +9,9 @@ from api.models.delete_user import DeleteUser
 from api.models.select.select_user_request import SelectUserRequest
 from api.models.select.select_user_response import SelectUserResponse
 from api.models.tester_response import TesterResponse
-from tests.base_test import BaseTest
 
 
-# def get_required_fields():
-#     return [
-#         (DeleteUser(method="delete", phone=str(randrange(0, 50000))), "failure"),
-#         (DeleteUser(id=str(uuid.uuid4()), phone=str(randrange(0, 50000))), "failure"),
-#         (DeleteUser(id=str(uuid.uuid4()), method="delete"), "failure")
-#     ]
-
-
-class TestDeleteUser(BaseTest):
+class TestDeleteUser:
     def test_should_see_success_after_delete_user(self):
         add_user = AddUser(id=str(uuid.uuid4()), method="add", name="name", surname="surname",
                            phone=str(randrange(0, 50000)), age=100)
@@ -70,10 +61,3 @@ class TestDeleteUser(BaseTest):
         delete_result2 = TesterResponse.parse_raw(TesterClient.post_to_ws(body=delete_user))
 
         assert delete_result2 == expected_result_delete2
-
-    # @pytest.mark.parametrize('body, status', get_required_fields())
-    # def test_required_fields_in_add_user(self, body, status):
-    #     response = TesterClient.post_to_ws(body=body)
-    #     result = TesterResponse.parse_raw(response)
-    #
-    #     assert status == result.status

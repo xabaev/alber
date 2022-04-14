@@ -10,10 +10,9 @@ from api.models.select.select_user_request import SelectUserRequest
 from api.models.select.select_user_response import SelectUserResponse, SelectUser
 from api.models.tester_response import TesterResponse
 from api.models.update_user import UpdateUser
-from tests.base_test import BaseTest
 
 
-class TestUpdateUser(BaseTest):
+class TestUpdateUser:
 
     @pytest.mark.xfail(reason="Select always comes back failure + bug in update - age is not updated")
     def test_should_see_success_after_update_user(self):
