@@ -1,13 +1,15 @@
 import asyncio
 import configparser
 import json
+import os
 
+import allure
 import websockets
 
 from api.models.base_model import BaseModel
 
 config = configparser.ConfigParser()
-config.read("api/conf/cfg_test_environment.ini")
+config.read(os.path.join(os.path.dirname(__file__), "cfg_test_environment.ini"))
 ADDRESS = config['WS']['address']
 
 
@@ -22,8 +24,12 @@ class TesterClient:
                 body = json.loads(json.dumps(json.dumps(body, default=lambda x: x.__dict__)))
 
         async with websockets.connect(ADDRESS) as websocket:
-            await websocket.send(body)
-            response = await websocket.recv()
+            with allure.step(f'send request to: {ADDRESS}'):
+                allure.attach("body", body)
+                await websocket.send(body)
+            with allure.step(f'get response'):
+                response = await websocket.recv()
+                allure.attach("response", response)
         return response
 
     @classmethod
