@@ -6,8 +6,11 @@
 
 Инструкция по запуску тестов:
 Из директории с тестами выполнить команду в терминале:
+
 "docker build ./enviroment -t testerso"
+
 "docker run -p 4000:4000 -t -i -d testerso"
+
 "python3 -m pytest tests --alluredir \allure-results"
 
 Инструкция по просмотру результатов:
