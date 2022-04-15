@@ -1,17 +1,21 @@
+import configparser
 import json
 
 import websocket
 
 from api.models.base_model import BaseModel
 
+config = configparser.ConfigParser()
+config.read("api/conf/cfg_test_environment.ini")
+ADDRESS = config['WS']['address']
+
 
 class TesterClient:
-    address = "ws://127.0.0.1:4000"
 
     @classmethod
     def post_to_ws(cls, body):
         ws = websocket.WebSocket()
-        ws.connect(cls.address)
+        ws.connect(ADDRESS)
         if not isinstance(body, str):
             if isinstance(body, BaseModel):
                 body = json.dumps(body.dict())
